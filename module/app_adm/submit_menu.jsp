@@ -1,8 +1,7 @@
 <%--
- % Copyright 2011 - PT. Perusahaan Gas Negara Tbk.
  %
  % Author(s):
- % + PT. Awakami
+ % + x10c-Lab
  %   - m.shulhan (ms@kilabit.org)
 --%>
 

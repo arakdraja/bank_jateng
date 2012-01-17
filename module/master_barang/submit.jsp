@@ -1,5 +1,4 @@
 <%--
- % Copyright 2011 - Kementerian Pendidikan Nasional - Dit.PSMP
  %
  % Author(s):
  % + x10c-Lab
@@ -21,33 +20,35 @@ try{
 	Statement	db_stmt = db_con.createStatement();
 
 	int dml 					= Integer.parseInt(request.getParameter("dml_type"));
+	String kode_barang			= request.getParameter("kode_barang");
 	String id_jenis_barang		= request.getParameter("id_jenis_barang");
-	String nama_jenis_barang	= request.getParameter("nama_jenis_barang");
+	String nama_barang			= request.getParameter("nama_barang");
+	String jumlah_total			= request.getParameter("jumlah_total");
+	String stok_minimal			= request.getParameter("stok_minimal");
+	String keterangan			= request.getParameter("keterangan");
 	String q;
 
 	switch (dml) {
 	case 2:
-		q	=" insert into r_jenis_barang (nama_jenis_barang)"
-			+" values ('"+ nama_jenis_barang +"')";
+		q	=" insert into m_barang (kode_barang, id_jenis_barang, nama_barang, jumlah_total, stok_minimal, keterangan)"
+			+" values ('"+ kode_barang +"', "+ id_jenis_barang +", '"+ nama_barang +"', "+ jumlah_total +", "+ stok_minimal +", '" + keterangan +"')";
 		break;
 	case 3:
-		q	=" update	r_jenis_barang"
-			+" set		nama_jenis_barang	= '"+ nama_jenis_barang +"'"
-			+" where	id_jenis_barang		= "+ id_jenis_barang;
+		q	=" update	m_barang"
+			+" set		id_jenis_barang		=  "+ id_jenis_barang
+			+" ,		nama_barang			= '"+ nama_barang +"'"
+			+" ,		jumlah_total		=  "+ jumlah_total
+			+" ,		stok_minimal		=  "+ stok_minimal
+			+" ,		keterangan			= '"+ keterangan +"'"
+			+" where	kode_barang			= '"+ kode_barang + "'";
 		break;
 	case 4:
-		q = " delete from r_jenis_barang where id_jenis_barang = "+ id_jenis_barang;
+		q = " delete from m_barang where kode_barang = '"+ kode_barang + "'";
 		break;
 	default:
 		out.print("{success:false,info:'DML tipe tidak diketahui ("+dml+")!'}");
 		return;
 	}
-
-	db_stmt.executeUpdate(q);
-	
-	q	="insert into __log (tanggal, id_user, nama_menu, status_akses) values (now(), '"
-		+ session.getAttribute("user.id") +"','"
-		+ session.getAttribute("menu.id") +"','"+ dml +"')";
 
 	db_stmt.executeUpdate(q);
 
